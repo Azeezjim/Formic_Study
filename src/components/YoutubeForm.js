@@ -7,32 +7,27 @@ function YoutubeForm() {
       name: '', 
       email: '',
       channel: ''
+    },
+    onSubmit: values => {
+      console.log('form data', values);
     }
   })
   return (
     <div>
-    <form>
-      <label thmlFor="">Name</label>
+    <form onSubmit={formik.handleSubmit}>
+      <label thmlFor="name">Name</label>
       <input type="text" id='name' name='name' onChange={formik.handleChange} value={formik.values.name} />
 
-      <label thmlFor="">E-mail</label>
+      <label thmlFor="email">E-mail</label>
       <input type="email" id='email' name='email' onChange={formik.handleChange} value={formik.values.email} />
       
-      <label thmlFor="">Channel</label>
-      <input type="text" id='channel' name='channel' onChange={formik.handleChange} value={formik.balues.channel} />
+      <label thmlFor="channel ">Channel</label>
+      <input type="text" id='channel' name='channel' onChange={formik.handleChange} value={formik.values.channel} />
+
+      <button>Submit</button>
     </form>
     </div>
   )
 }
-
-
-
-
-
-
-
-
-  
-+
 
 export default YoutubeForm
