@@ -10,6 +10,24 @@ function YoutubeForm() {
     },
     onSubmit: values => {
       console.log('form data', values);
+    },
+    
+    validate:  values => {
+      let errors = {}
+        if(!values.name) {
+          errors.name = 'Required'
+        }
+
+      if(!values.email) {
+        errors.elail = 'Required'
+      } else if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) {
+        errors.email= 'Invalade email format'
+      }
+
+      if(!values.channel) {
+        error.channel = 'Required'
+      }
+      
     }
   })
   return (
