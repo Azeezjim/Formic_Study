@@ -1,12 +1,13 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
-import * as Yup from 'yup'
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from 'yup';
 // import { validate } from "json-schema";
 
 const initialValues = {
   name: "",
   email: "",
   channel: "",
+  comments: ""
 };
 
 const onSubmit = values => {
@@ -52,9 +53,8 @@ function OldYoutubeForm() {
             // onBlur={formik.handleBlur}
             // value={formik.values.name}
           />
-          {formik.touched.name && formik.errors.name ? <div className="error">{formik.errors.name}</div> : null}
         </div>
-
+          <ErrorMessage className='name' name="name" />
         <div className="form-control">
           <label htmlFor="email">E-mail</label>
           <Field
@@ -65,7 +65,7 @@ function OldYoutubeForm() {
             // onBlur={formik.handleBlur}
             // value={formik.values.email}
           />
-          {formik.touched.email && formik.errors.email ? <div className="error">{formik.errors.email}</div> : null}
+          <ErrorMessage className='error  ' name="email" />
         </div>
         <div className="form-control">
           <label htmlFor="channel ">Channel</label>
@@ -77,9 +77,19 @@ function OldYoutubeForm() {
             // onBlur={formik.handleBlur}
             // value={formik.values.channel}
           />
-          {formik.touched.channel && formik.errors.channel ? <div className="error">{formik.errors.channel}</div> : null}
+          <ErrorMessage className='name' name="channel" />
         </div>
 
+        <div className="form-control">
+          <label htmlFor="comments"></label>
+          <Field 
+          type="text"
+          id="comments"
+          name="comments"
+          as="textarea"
+          />
+
+        </div>
         <button type="button">Submit</button>
       </Form>
     </Formik>
