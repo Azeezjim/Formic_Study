@@ -36,17 +36,17 @@ const validate = values => {
 
 const validationSchemer = Yup.object({
   name: Yup.string().required('Required Jor'),
-  email: Yup.string().email('Invalid email format').reauired('Require'),
+  email: Yup.string().email('Invalid email format').required('Required'),
   channel: Yup.string().required('Required')
 })
 function OldYoutubeForm() {
   const formik = useFormik({
     initialValues,
     onSubmit,
-    validate,
+    // validate,
     validationSchemer
   });
-  console.log("form error", formik.errors);
+  // console.log("form error", formik.errors);
 
   return (
     <div>

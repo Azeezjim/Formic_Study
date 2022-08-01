@@ -36,7 +36,7 @@ const validate = values => {
 
 const validationSchemer = Yup.object({
   name: Yup.string().required('Required Jor'),
-  email: Yup.string().email('Invalid email format').reauired(\|Requir),
+  email: Yup.string().email('Invalid email format').required('required'),
   channel: Yup.string().required('Required')
 })
 function YoutubeForm() {
