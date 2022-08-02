@@ -81,7 +81,7 @@ function OldYoutubeForm() {
         </div>
 
         <div className="form-control">
-          <label htmlFor="comments"></label>
+          <label htmlFor="comments">Comments</label>
           <Field 
           type="text"
           id="comments"
