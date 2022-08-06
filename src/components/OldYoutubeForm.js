@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import TextError from "./TextError";
 import * as Yup from 'yup';
 // import { validate } from "json-schema";
 
@@ -8,11 +9,16 @@ const initialValues = {
   email: "",
   channel: "",
   comments: "",
-  address: ""
+  address: "",
+  socials : {
+    facebook: "",
+    twitter: ""
+  },
+  phoneNumber: ['', '']
 };
 
 const onSubmit = values => {
-  // console.log("form data", values);
+  console.log("form data", values);
 };
 
 const validationSchema = Yup.object({
@@ -55,7 +61,7 @@ function OldYoutubeForm() {
             // value={formik.values.name}
           />
         </div>
-          <ErrorMessage className='name' name="name" />
+          <ErrorMessage component={TextError}  name="name" />
         <div className="form-control">
           <label htmlFor="email">E-mail</label>
           <Field
@@ -66,7 +72,7 @@ function OldYoutubeForm() {
             // onBlur={formik.handleBlur}
             // value={formik.values.email}
           />
-          <ErrorMessage className='error  ' name="email" />
+          <ErrorMessage component={TextError} name="email" />
         </div>
         <div className="form-control">
           <label htmlFor="channel ">Channel</label>
@@ -78,7 +84,7 @@ function OldYoutubeForm() {
             // onBlur={formik.handleBlur}
             // value={formik.values.channel}
           />
-          <ErrorMessage className='name' name="channel" />
+          <ErrorMessage component={TextError} name="channel" />
         </div>
 
         <div className="form-control">
@@ -89,7 +95,9 @@ function OldYoutubeForm() {
           name="comments"
           as="textarea"
           />
-
+          <ErrorMessage name='comments'>
+            {errorMsg => <div className="error">{errorMsg}</div>}
+          </ErrorMessage>
         </div>
         <div class="form-control">
           <label htmlFor="address">Address</label>
@@ -104,9 +112,27 @@ function OldYoutubeForm() {
               )
             }}  
             
-                      </Field>
+          </Field>
         </div>
-        <button type="button">Submit</button>
+        <div className="form-control">
+          <label htmlFor="facebook">Facebook</label>
+          <Field type='text' id='facebook' name='facebook'/>
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="twitter">Twitter</label>
+          <Field type='text' id='twitter' name='twitter'/>
+        </div>
+
+        <div class="form-control">
+          <label htmlFor="primaryPNo">primaryPNo</label>
+          <Field type='text' id='primaryPNo' name='phoneNumber[1]' />
+        </div>
+        <div class="form-control">
+          <label htmlFor="SecondaryPNo">SecondaryPNo</label>
+          <Field type='text' id='SecondaryPNo' name='phoneNumber[1]' />
+        </div>
+        <button type="submit">Submit</button>
       </Form>
     </Formik>
   );
