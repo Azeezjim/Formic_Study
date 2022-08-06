@@ -1,7 +1,7 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import TextError from "./TextError";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 // import { validate } from "json-schema";
 
 const initialValues = {
@@ -10,22 +10,23 @@ const initialValues = {
   channel: "",
   comments: "",
   address: "",
-  socials : {
+  socials: {
     facebook: "",
-    twitter: ""
+    twitter: "",
   },
-  phoneNumber: ['', '']
+  phoneNumber: ["", ""],
+  PNA: [""],
 };
 
-const onSubmit = values => {
+const onSubmit = (values) => {
   console.log("form data", values);
 };
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('Required Jor'),
-  email: Yup.string().email('Invalid email format').required('Required'),
-  channel: Yup.string().required('Required')
-})
+  name: Yup.string().required("Required Jor"),
+  email: Yup.string().email("Invalid email format").required("Required"),
+  channel: Yup.string().required("Required"),
+});
 
 // const validationSchema = Yup.object({
 //   name: Yup.string().required('Required'),
@@ -38,18 +39,18 @@ function OldYoutubeForm() {
   // const formik = useFormik({
   //   initialValues,
   //   onSubmit,
-  //   // validate, 
+  //   // validate,
   //   validationSchema
   // });
   // console.log("form error", formik.errors);
 
   return (
     <Formik
-    initialValues={initialValues}
-    validationSchema={validationSchema}
-    onSubmit={onSubmit}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
     >
-      <Form >
+      <Form>
         <div className="form-control">
           <label htmlFor="name">Name</label>
           <Field
@@ -61,7 +62,7 @@ function OldYoutubeForm() {
             // value={formik.values.name}
           />
         </div>
-          <ErrorMessage component={TextError}  name="name" />
+        <ErrorMessage component={TextError} name="name" />
         <div className="form-control">
           <label htmlFor="email">E-mail</label>
           <Field
@@ -89,49 +90,60 @@ function OldYoutubeForm() {
 
         <div className="form-control">
           <label htmlFor="comments">Comments</label>
-          <Field 
-          type="text"
-          id="comments"
-          name="comments"
-          as="textarea"
-          />
-          <ErrorMessage name='comments'>
-            {errorMsg => <div className="error">{errorMsg}</div>}
+          <Field type="text" id="comments" name="comments" as="textarea" />
+          <ErrorMessage name="comments">
+            {(errorMsg) => <div className="error">{errorMsg}</div>}
           </ErrorMessage>
         </div>
         <div class="form-control">
           <label htmlFor="address">Address</label>
           <Field name="address">
-            {props => {
-              const { field, meta } = props
+            {(props) => {
+              const { field, meta } = props;
               return (
                 <div>
-                  <input type= "text" id="address" { ...field} />
+                  <input type="text" id="address" {...field} />
                   {meta.touched && meta.error ? <div>{meta.error}</div> : null}
                 </div>
-              )
-            }}  
-            
+              );
+            }}
           </Field>
         </div>
         <div className="form-control">
           <label htmlFor="facebook">Facebook</label>
-          <Field type='text' id='facebook' name='facebook'/>
+          <Field type="text" id="facebook" name="facebook" />
         </div>
 
         <div className="form-control">
-          <label htmlFor="twitter">Twitter</label>
-          <Field type='text' id='twitter' name='twitter'/>
+          <label htmlFor="twitter">Tywitter</label>
+          <Field type="text" id="twitter" name="twitter" />
         </div>
 
         <div class="form-control">
           <label htmlFor="primaryPNo">primaryPNo</label>
-          <Field type='text' id='primaryPNo' name='phoneNumber[1]' />
+          <Field type="text" id="primaryPNo" name="phoneNumber[1]" />
         </div>
         <div class="form-control">
-          <label htmlFor="SecondaryPNo">SecondaryPNo</label>
-          <Field type='text' id='SecondaryPNo' name='phoneNumber[1]' />
+          <label htmlFor="PNA">PNA</label>
+          <FieldArray name="PNA">
+            {(fieldArrayProps) => {
+              const { push, remove, form } = fieldArrayProps;
+              const { value } = form;
+              const { PNA } = value;
+              return <div>
+                {PNA.map((phoneNumber, index) => (
+                    <div key={index}>
+                        <Field name={`phoneNumber[${index}]`}/>
+                        <button type="button" onClick={() => remove(index)} > - </button>
+                        <button type="button" onClick={() => push('')} > + </button>
+
+                    </div>
+                  ))}
+              </div>;
+            }}
+          </FieldArray>
         </div>
+
         <button type="submit">Submit</button>
       </Form>
     </Formik>
