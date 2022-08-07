@@ -157,16 +157,16 @@ function OldYoutubeForm() {
         <button type='button' onClick={() => formik.validateForm('comment')}>Validate Comment</button>
         <button type='button' onClick={() => formik.validateField()}>Validate All</button>
         <button type='button' onClick={() => formik.setFieldTouched('comment')}>Visit Comment</button>
-        <button type='button' onClick={() => formik.setTouched(
+        <button type='button' onClick={() => fo+rmik. setTouched(
           {
             name: true,
             email: true,
             channel: true,
-            comments: true
+            comments: false
 
           }
         )}>Visit Fildes</button>
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={!formik.isValid }>Submit</button>
       </Form>
         )
       }}
