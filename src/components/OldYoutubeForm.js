@@ -35,6 +35,13 @@ const validationSchema = Yup.object({
 //     .required('Required'),
 //   channel: Yup.string().required('Required')
 // })
+const comVaidate = (value) => {
+  let error;
+  if(!value) {
+    error =  "Required"
+  }
+  return error
+}
 function OldYoutubeForm() {
   // const formik = useFormik({
   //   initialValues,
@@ -50,9 +57,13 @@ function OldYoutubeForm() {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
+      {formik => {
+        console.log("formik", formik       )
+        return(
+
       <Form>
-        <div className="form-control">
-          <label htmlFor="name">Name</label>
+        <div classNam e="form-control">
+          <label html        For="name">Name</label>
           <Field
             type="text"
             id="name"
@@ -90,8 +101,8 @@ function OldYoutubeForm() {
 
         <div className="form-control">
           <label htmlFor="comments">Comments</label>
-          <Field type="text" id="comments" name="comments" as="textarea" />
-          <ErrorMessage name="comments">
+          <Field type="text" id="comments" name="comments" as="textarea" validate = {comVaidate} />
+          <ErrorMessage name="comments" component={TextError} >
             {(errorMsg) => <div className="error">{errorMsg}</div>}
           </ErrorMessage>
         </div>
@@ -124,28 +135,41 @@ function OldYoutubeForm() {
           <Field type="text" id="primaryPNo" name="phoneNumber[1]" />
         </div>
         <div class="form-control">
-          <label htmlFor="PNA">PNA</label>
+          <label >PNA</label>
           <FieldArray name="PNA">
             {(fieldArrayProps) => {
               const { push, remove, form } = fieldArrayProps;
-              const { value } = form;
-              const { PNA } = value;
-              return <div>
+              const { values } = form;
+              const { PNA } = values;
+              return <div> 
                 {PNA.map((phoneNumber, index) => (
                     <div key={index}>
-                        <Field name={`phoneNumber[${index}]`}/>
+                        <Field name={`PNA[${index}]`}/>
                         <button type="button" onClick={() => remove(index)} > - </button>
                         <button type="button" onClick={() => push('')} > + </button>
 
                     </div>
-                  ))}
+                  ))}  
               </div>;
             }}
           </FieldArray>
         </div>
+        <button type='button' onClick={() => formik.validateForm('comment')}>Validate Comment</button>
+        <button type='button' onClick={() => formik.validateField()}>Validate All</button>
+        <button type='button' onClick={() => formik.setFieldTouched('comment')}>Visit Comment</button>
+        <button type='button' onClick={() => formik.setTouched(
+          {
+            name: true,
+            email: true,
+            channel: true,
+            comments: true
 
+          }
+        )}>Visit Fildes</button>
         <button type="submit">Submit</button>
       </Form>
+        )
+      }}
     </Formik>
   );
 }
