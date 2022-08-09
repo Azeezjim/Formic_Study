@@ -1,4 +1,4 @@
-import React from "react";
+import  React,  { useState } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import TextError from "./TextError";
 import * as Yup from "yup";
@@ -17,6 +17,20 @@ const initialValues = {
   phoneNumber: ["", ""],
   PNA: [""],
 };
+const savedValues = {
+  name: "Azeezjim",
+  email: "azeexjim@gmail.com",
+  channel: "Code Evolution",
+  comments: "Let's study today",
+  address: "",
+  socials: {
+    facebook: "",
+    twitter: "",
+  },
+  phoneNumber: ["", ""],
+  PNA: [""],
+};
+
 
 const onSubmit = (values) => {
   console.log("form data", values);
@@ -29,7 +43,7 @@ const validationSchema = Yup.object({
 });
 
 // const validationSchema = Yup.object({
-//   name: Yup.string().required('Required'),
+//   name: Yup.string().required('Required'),     
 //   email: Yup.string()
 //     .email('Invalid email format')
 //     .required('Required'),
@@ -43,9 +57,11 @@ const comVaidate = (value) => {
   return error
 }
 function OldYoutubeForm() {
+  const [formValue, setFormValue] = useState(null)
+  
   // const formik = useFormik({
   //   initialValues,
-  //   onSubmit,
+  //   onSubmit, 
   //   // validate,
   //   validationSchema
   // });
@@ -53,9 +69,10 @@ function OldYoutubeForm() {
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={formValue || initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      enableReinitialize
     >
       {formik => {
         console.log("formik", formik       )
@@ -154,7 +171,7 @@ function OldYoutubeForm() {
             }}
           </FieldArray>
         </div>
-        <button type='button' onClick={() => formik.validateForm('comment')}>Validate Comment</button>
+        {/* <button type='button' onClick={() => formik.validateForm('comment')}>Validate Comment</button>
         <button type='button' onClick={() => formik.validateField()}>Validate All</button>
         <button type='button' onClick={() => formik.setFieldTouched('comment')}>Visit Comment</button>
         <button type='button' onClick={() => fo+rmik. setTouched(
@@ -165,7 +182,9 @@ function OldYoutubeForm() {
             comments: false
 
           }
-        )}>Visit Fildes</button>
+        )}>Visit Fildes</button> */}
+        <button type="reset">Reset</button>
+        <button type="button" onClick={() => setFormValue(savedValues)}>Load Saved Data</button>
         <button type="submit" disabled={!formik.isValid }>Submit</button>
       </Form>
         )
